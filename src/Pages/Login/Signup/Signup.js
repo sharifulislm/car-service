@@ -1,13 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import './Signup.css';
 import auth from '../../../firebase.init';
 import SocalLogin from '../SocalLogin/SocalLogin';
+import { async } from '@firebase/util';
 
 
 const Signup = () => {
-
+     const [agree,setAgree]=useState(false)
     const navigate = useNavigate();
     const nameRef = useRef('');
     const emailRef = useRef('');
@@ -23,7 +24,8 @@ const Signup = () => {
         user,
         loading,
         error,
-      ] = useCreateUserWithEmailAndPassword(auth);
+      ] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification: true});
+      const [updateProfile, updating, Updateerror] = useUpdateProfile(auth);
 
 
       const navigateSignup = event => {
@@ -40,14 +42,24 @@ const Signup = () => {
 
 
 
-const hendleSubmit = event => {
+const hendleSubmit = async (event) => {
     event.preventDefault();
     const name = nameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    createUserWithEmailAndPassword(email, password)
+    // const agree = event.target.terms.checked;
+   
+    await createUserWithEmailAndPassword(email, password);
+    await updateProfile({ displayName:name });
+    navigate("/Home");
 
-    console.log(name,email,password);
+    console.log('Updated profile');
+
+
+
+
+
+
     
 }
 
@@ -62,9 +74,11 @@ const hendleSubmit = event => {
             <input ref={emailRef} type="email" name="email" id="" placeholder='Email Address' required/>
             
             <input ref={passwordRef} type="password" name="password" id="" placeholder='Password' required/>
-            <input className='ms-1' type="checkbox" name="terms" id="terms" />
-            <label htmlFor="">Accpet car terms and Conditions </label>
-            <input className='mt-2' type="submit" value="Register" />
+            <input onClick={() => setAgree(!agree)} className='ms-1' type="checkbox" name="terms" id="terms" />
+            <label  className={`ps-2 ${agree ? '' : 'text-danger'}`} htmlFor="">Accpet car terms and Conditions </label>
+            <input disabled={!agree}
+            className='mt-2 btn btn-primary'
+             type="submit" value="Register" />
           
         </form>
         <p>Already have an account? <Link to="/Login" className='text-Primary pe-auto text-decoration-none' onClick={navigateSignup}>Please Login</Link> </p>
