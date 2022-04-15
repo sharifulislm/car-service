@@ -7,6 +7,7 @@ import SocalLogin from '../SocalLogin/SocalLogin';
 import { async } from '@firebase/util';
 
 
+
 const Signup = () => {
      const [agree,setAgree]=useState(false)
     const navigate = useNavigate();
@@ -82,8 +83,9 @@ const hendleSubmit = async (event) => {
           
         </form>
         <p>Already have an account? <Link to="/Login" className='text-Primary pe-auto text-decoration-none' onClick={navigateSignup}>Please Login</Link> </p>
-
+        
         <SocalLogin></SocalLogin>
+       
     </div>
     );
 };
