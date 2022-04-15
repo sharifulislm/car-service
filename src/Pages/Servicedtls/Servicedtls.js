@@ -7,7 +7,7 @@ const Servicedtls = () => {
         <div>
             <h1> this is service {serviceId.length} </h1>
 
-            <Link to="/Checkout"> <button className='btn btn-primary'> Proceed Checkout</button> </Link>
+            <Link to="/CheacOut"> <button className='btn btn-primary'> Proceed Checkout</button> </Link>
         </div>
     );
 };
