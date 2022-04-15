@@ -62,9 +62,12 @@ const hendleSubmit = event => {
             <input ref={emailRef} type="email" name="email" id="" placeholder='Email Address' required/>
             
             <input ref={passwordRef} type="password" name="password" id="" placeholder='Password' required/>
-            <input type="submit" value="Register" />
+            <input className='ms-1' type="checkbox" name="terms" id="terms" />
+            <label htmlFor="">Accpet car terms and Conditions </label>
+            <input className='mt-2' type="submit" value="Register" />
+          
         </form>
-        <p>Already have an account? <Link to="/Login" className='text-danger pe-auto text-decoration-none' onClick={navigateSignup}>Please Login</Link> </p>
+        <p>Already have an account? <Link to="/Login" className='text-Primary pe-auto text-decoration-none' onClick={navigateSignup}>Please Login</Link> </p>
 
         <SocalLogin></SocalLogin>
     </div>

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
 
@@ -11,6 +11,7 @@ const Login = () => {
    const navigate = useNavigate();
 
 
+ let  ErrorElement;
    const [
     signInWithEmailAndPassword,
     user,
@@ -21,16 +22,25 @@ const Login = () => {
    const navigateSignup = event => {
     navigate('/Signup');
 }
+const [sendPasswordResetEmail, sending, error1] = useSendPasswordResetEmail(auth);
+
+if (error || error1) {
+        
+    ErrorElement = <div>
+       <p className='text-danger'>Error: {error?.message} {error1?.message} </p>
+     </div>
+   
+ }
+ if (loading || sending) {
+    ErrorElement = <p className='ps-4'>Loading...</p>
+ }
+
+
 if(user){
     navigate("/Home");
 
 }
-if(loading){
-    console.log('Loading...')
-}
-if(error){
-    console.log("error");
-}
+
 
    const hendleSubmit = event => {
         event.preventDefault();
@@ -39,6 +49,15 @@ if(error){
         signInWithEmailAndPassword(email, password)
         console.log(email, password);
    }
+
+   const ResetPassword = async() => {
+    const email = emailRef.current.value;
+    await sendPasswordResetEmail(email);
+    alert('Sent email');
+
+}
+
+   
 
 
      
@@ -51,7 +70,7 @@ if(error){
                 <Form.Label>Email address</Form.Label>
                 <Form.Control ref={emailRef} type="email" placeholder="Enter email" required />
                 <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
+                
                 </Form.Text>
             </Form.Group>
 
@@ -62,11 +81,14 @@ if(error){
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="Check me out" />
             </Form.Group>
-            <Button variant="primary" type="submit">
-                Submit
+            { ErrorElement}
+            <Button variant="primary w-50 mx-auto d-block mb-2" type="submit">
+                Login
             </Button>
         </Form>
-        <p>New to Genius Car? <Link to="/Signup" className='text-danger pe-auto text-decoration-none' onClick={navigateSignup}>Please Register</Link> </p>
+       
+        <p>New to Genius Car? <Link to="/Signup" className='text-Primary pe-auto text-decoration-none' onClick={navigateSignup}>Please Register</Link> </p>
+        <p>Forget password? <Link to="/Signup" className='text-Primary pe-auto text-decoration-none' onClick={ResetPassword}>Reset Password</Link> </p>
     </div>
     );
 };
