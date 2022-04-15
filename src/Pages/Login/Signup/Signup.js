@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import './Signup.css';
 import auth from '../../../firebase.init';
+import SocalLogin from '../SocalLogin/SocalLogin';
 
 
 const Signup = () => {
@@ -64,6 +65,8 @@ const hendleSubmit = event => {
             <input type="submit" value="Register" />
         </form>
         <p>Already have an account? <Link to="/Login" className='text-danger pe-auto text-decoration-none' onClick={navigateSignup}>Please Login</Link> </p>
+
+        <SocalLogin></SocalLogin>
     </div>
     );
 };

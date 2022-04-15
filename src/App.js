@@ -26,7 +26,6 @@ function App() {
         <Route path='/service/:serviceId' element={<Servicedtls></Servicedtls>}></Route>
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/Signup' element={<Signup></Signup>}></Route>
-        
         <Route path='/CheacOut' element={<RequireAuth> <CheacOut></CheacOut> </RequireAuth>}></Route>
         
 
