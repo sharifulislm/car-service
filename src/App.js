@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import About from './Pages/About/About';
+import Addservice from './Pages/Addservice/Addservice';
 import CheacOut from './Pages/CheacOut/CheacOut';
 
 
@@ -28,6 +29,7 @@ function App() {
         <Route path='/login' element={<Login></Login>}></Route>
         <Route path='/Signup' element={<Signup></Signup>}></Route>
         <Route path='/CheacOut' element={<RequireAuth> <CheacOut></CheacOut> </RequireAuth>}></Route>
+        <Route path='/addservice' element={<RequireAuth> <Addservice></Addservice> </RequireAuth>}></Route>
         
 
         <Route path="/about" element={<About></About>}></Route>
