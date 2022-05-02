@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useSendPasswordResetEmail, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import auth from '../../../firebase.init';
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -101,7 +101,7 @@ else{
         <p>New to Genius Car? <Link to="/Signup" className='text-Primary pe-auto text-decoration-none' onClick={navigateSignup}>Please Register</Link> </p>
         <p>Forget password? <button className='btn btn-link text-primary pe-auto text-decoration-none' onClick={ResetPassword}>Reset Password</button> </p>
 
-        <ToastContainer />
+        
     </div>
     );
 };

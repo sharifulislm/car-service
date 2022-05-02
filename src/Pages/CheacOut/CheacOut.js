@@ -1,8 +1,11 @@
+
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import UseServicedetals from '../../Hooks/UseServicedetals';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init'
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const CheacOut = () => {
     const {serviceId} = useParams();
@@ -28,11 +31,23 @@ const CheacOut = () => {
     const handlePlaceOrder = event => {
         event.preventDefault();
         const order = {
+            email:user.email,
             service: service.name,
             sericeId: serviceId,
-            address: event.target.address.value,
+            address: event.target.addrsess.value,
             phone: event.target.phone.value
+            
         }
+        axios.post('http://localhost:5000/order', order)
+        .then(response => {
+            const {data} = response;
+            if(data.insertedId){
+                toast('your order is booked');
+                event.target.reset();
+            }
+        })
+        
+    
     }
 
     return (
@@ -40,9 +55,9 @@ const CheacOut = () => {
 
             <h1> Please Order: {service.name} </h1>
             <form onSubmit={handlePlaceOrder}>
-                <input className='w-100 mb-2' type="text" value={user.displayName}  name='name' placeholder='name' required readOnly/>
+                <input className='w-100 mb-2' type="text" value={user?.displayName}  name='name' placeholder='name' required readOnly/>
                 <br/>
-                <input className='w-100 mb-2' type="email" value={user.email}  name='email' placeholder='email' required readOnly />
+                <input className='w-100 mb-2' type="email" value={user?.email}  name='email' placeholder='email' required readOnly />
                 <br/>
                 <input className='w-100 mb-2' type="text"  value={service.name} name='service' placeholder='service' required />
                 <br/>
